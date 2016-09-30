@@ -1,0 +1,3 @@
+#!/bin/bash
+# Hmm..This is it~
+exec ls -lh
