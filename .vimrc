@@ -1,3 +1,8 @@
+" TODO 1.选中一段文字，按某个键，执行脚本，进行转义并删除空格；重复按可撤销。
+" TODO 2.粘贴时自动进入粘贴模式，粘贴完毕还是自动缩进
+" TODO 3.一键开启复制模式，隐藏所有行号。（记得验证一行太长时会不会复制上换行）
+" TODO 4.zz不保存就退出
+
 "基础配置
 "----------------------------------------------------------------
 syntax on
@@ -10,13 +15,21 @@ set expandtab
 set autoindent
 set scrolloff=3
 inoremap kj <ESC>
+inoremap jk <ESC>
 "History存储容量
 set history=3000
 "----------------------------------------------------------------
+"目录树设置
+set nocp
+filetype plugin on
+"---------
+
+
 
 "行号配置
 "----------------------------------------
 " 相对行号: 行号变成相对，可以用 nj/nk 进行跳转
+" TODO 5.相对行号去掉 或者添加去掉的快捷键
 set relativenumber number
 au FocusLost * :set norelativenumber number
 au FocusGained * :set relativenumber
@@ -49,7 +62,8 @@ nnoremap <C-n> :call NumberToggle()<cr>
 "map <F5> i{e<Esc>a}<Esc>
 
 "前5个F不能用
-:map <F1> :wq!<CR>
+:map <F1> <Nop>
+":map <F1> :wq!<CR>
 :map <F2> :wq!<CR>
 :map <F3> :wq!<CR>
 :map <F4> :wq!<CR>
@@ -80,8 +94,8 @@ au InsertLeave * set nopaste
 "endfunction
 "inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
-
-:map <F8> :wq!<CR>
+":map <F8> :wq!<CR>
+":map <F8>   :w<CR>:!vi %<CR>
 :map <F9> :wq!<CR>
 :map <F10> :wq!<CR>
 
@@ -94,3 +108,25 @@ au InsertLeave * set nopaste
 :map <C-h> <Esc><C-w>h
 :map <C-l> <Esc><C-w>l
 "----------------------------------------------------------------
+highlight Comment ctermfg=gray
+set hlsearch
+highlight Search term=reverse ctermfg=0 ctermbg=3
+
+"inoremap { {}<ESC>i
+"inoremap {<CR> {<CR><CR>}<ESC>ki
+"inoremap " ""<ESC>i
+set incsearch
+
+"--------------------------------------------------------------- map映射
+:nnoremap zz :q<CR>
+
+"---------------------------------------------------------------
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+"map <C-n> :NERDTreeToggle<CR>
+" https://github.com/scrooloose/nerdtree
+"--------------------------------------------------------------- 目录树
+
